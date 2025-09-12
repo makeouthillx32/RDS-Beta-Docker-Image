@@ -81,7 +81,7 @@ else
     ## if starting command is updategame or updateboth update the game
     if [ "${STARTUP}" == "updategame" ] || [ "${STARTUP}" == "updateboth" ]; then 
         echo -e "Checking for game updates and updating if necessary..."
-        ./steamcmd/steamcmd.sh +force_install_dir /home/container +login ${STEAM_USER} ${STEAM_PASS} ${STEAM_AUTH} +@sSteamCmdForcePlatformType windows $(printf %s "+app_update 648800 -beta beta validate") +quit
+        ./steamcmd/steamcmd.sh +force_install_dir /home/container +login ${STEAM_USER} ${STEAM_PASS} ${STEAM_AUTH} +@sSteamCmdForcePlatformType windows $(printf %s "+app_update 648800 -beta beta") +quit
     else
         echo -e "Not updating game as startup command is not set to updategame or updateboth. Starting Server"
     fi

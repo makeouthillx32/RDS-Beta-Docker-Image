@@ -6,7 +6,7 @@
     },
     "exported_at": "2025-03-18T16:48:00+01:00",
     "name": "Raft Dedicated Server (RDS)",
-    "author": "franzfischer78",
+    "author": "franzfischer78@example.com",
     "description": "Raft Dedicated Servers are used to host your own Raft Game Servers",
     "features": null,
     "docker_images": {
