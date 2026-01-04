@@ -1,0 +1,11 @@
+{
+  "name": "rds-panel",
+  "version": "1.0.0",
+  "description": "Simple web panel for Raft RDS in Docker",
+  "main": "server.js",
+  "type": "module",
+  "dependencies": {
+    "dockerode": "^4.0.2",
+    "express": "^4.19.0"
+  }
+}
