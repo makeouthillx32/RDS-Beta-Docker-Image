@@ -10,35 +10,34 @@ services:
       # What to do on startup: update & then run
       - STARTUP=updateboth
 
-      # These come from Portainer stack env vars (do NOT hardcode in Git)
+      # Filled in via Portainer env vars
       - STEAM_USER=${STEAM_USER}
       - STEAM_PASS=${STEAM_PASS}
       # Optional Steam Guard email code
       # - STEAM_AUTH=${STEAM_AUTH}
 
     volumes:
-      # WSL2 path we created earlier
+      # WSL2 path we created
       - /srv/raft-rds:/home/container
 
     ports:
-      # Adjust if needed
-      - "27015:27015/udp"
-      - "27020:27020/udp"
+      # HOST:CONTAINER (UDP)
+      # Host 27515 → container 27015
+      # Host 27520 → container 27020
+      - "27515:27015/udp"
+      - "27520:27020/udp"
 
   rds-panel:
     image: node:20-alpine
     container_name: rds_panel
     restart: unless-stopped
 
-    # We'll keep code in /app/panel inside the container
     working_dir: /app/panel
 
     environment:
-      # Set this via Portainer env vars too
+      # Set this via Portainer env vars (ADMIN_TOKEN)
       - ADMIN_TOKEN=${ADMIN_TOKEN}
 
-    # Clone your GitHub repo into /app on container start,
-    # then run the panel from /app/panel/server.js
     command: >
       sh -c "
         apk add --no-cache git &&
@@ -52,9 +51,9 @@ services:
       "
 
     volumes:
-      # Let panel talk to Docker to start/stop raft_rds
+      # So panel can control raft_rds via Docker API
       - /var/run/docker.sock:/var/run/docker.sock
 
     ports:
-      # Web panel at http://<love-pc-ip>:8080
-      - "8080:3000"
+      # Web panel on host 8899 → container 3000
+      - "8899:3000"
