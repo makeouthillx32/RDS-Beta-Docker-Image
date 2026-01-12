@@ -1,25 +1,29 @@
-name: Docker Image CI
+name: Build & Push RDS Docker Image
 
 on:
   push:
-    branches: [ "main" ]
-  pull_request:
     branches: [ "main" ]
 
 jobs:
   build:
     runs-on: ubuntu-latest
 
+    permissions:
+      contents: read
+      packages: write   # REQUIRED for GHCR push
+
     steps:
-      - name: Checkout repository
+      - name: Checkout
         uses: actions/checkout@v4
 
       - name: Log in to GitHub Container Registry
-        run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
-
-      - name: Build the Docker image
         run: |
-          docker build . --file Dockerfile --tag ghcr.io/franzfischer78/raftmodding-rds:latest
+          echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
 
-      - name: Push Docker image to GHCR
-        run: docker push ghcr.io/franzfischer78/raftmodding-rds:latest
+      - name: Build image
+        run: |
+          docker build -t ghcr.io/${{ github.repository_owner }}/rds-beta:latest .
+
+      - name: Push image
+        run: |
+          docker push ghcr.io/${{ github.repository_owner }}/rds-beta:latest
