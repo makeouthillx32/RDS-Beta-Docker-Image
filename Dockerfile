@@ -1,5 +1,5 @@
 # --------------------------------------------------------------------------------
-# Generic Wine image based on Wine stable modified for Raft Dedicated Server (RDS)
+# Generic Wine image based on Wine stable modified for Raft Dedicated Server (RDS) 
 # --------------------------------------------------------------------------------
 
     FROM            ghcr.io/ptero-eggs/yolks:debian
